@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KODATTORIA - グッズ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="lang-ja">
+
+<div id="lang-bar">
+  <button onclick="setLang('ja')" class="active" id="btn-ja">日本語</button>
+  <button onclick="setLang('en')" id="btn-en">English</button>
+  <button onclick="setLang('it')" id="btn-it">Italiano</button>
+</div>
+
+<div id="wrapper">
+  <table id="main-table">
+    <tbody>
+      <tr>
+        <!-- LEFT: PHOTO + NAV -->
+        <td id="left-cell">
+          <div id="photo-box">
+            <div style="width:200px;height:270px;background:#f0f0f0;border:1px solid #cccccc;display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:x-small;color:#aaaaaa;">
+                <span data-lang="ja">写真をここに配置</span>
+                <span data-lang="en">Photo here</span>
+                <span data-lang="it">Foto qui</span>
+              </span>
+            </div>
+          </div>
+          <ul id="site-nav">
+            <li><a href="index.html"><span data-lang="ja">トップ</span><span data-lang="en">Top</span><span data-lang="it">Top</span></a></li>
+            <li><a href="magazine.html"><span data-lang="ja">雑誌アーカイブ</span><span data-lang="en">Magazine</span><span data-lang="it">Rivista</span></a></li>
+            <li class="active"><a href="goods.html"><span data-lang="ja">グッズ</span><span data-lang="en">Goods</span><span data-lang="it">Merchandise</span></a></li>
+          </ul>
+        </td>
+
+        <!-- RIGHT: CONTENT -->
+        <td id="info-cell">
+          <div id="site-title">KODATTORIA</div>
+          <div id="site-tagline">
+            <span data-lang="ja">間借りイタリアン &amp; 雑誌 &amp; 別荘プロジェクト</span>
+            <span data-lang="en">Pop-up Italian &amp; Magazine &amp; Villa Project</span>
+            <span data-lang="it">Ristorante Itinerante &amp; Rivista &amp; Progetto Villa</span>
+          </div>
+
+          <div class="section-title">
+            <span data-lang="ja">グッズ</span>
+            <span data-lang="en">Goods</span>
+            <span data-lang="it">Merchandise</span>
+          </div>
+
+          <div class="goods-item">
+            <div class="goods-photo">
+              <span data-lang="ja">写真準備中</span>
+              <span data-lang="en">Photo TBD</span>
+              <span data-lang="it">Foto TBD</span>
+            </div>
+            <div class="goods-name">オレキエッT</div>
+            <div class="goods-price">
+              <span data-lang="ja">価格未定</span>
+              <span data-lang="en">Price TBD</span>
+              <span data-lang="it">Prezzo TBD</span>
+            </div>
+          </div>
+
+          <p class="purchase-note">
+            <span data-lang="ja">※ 現地購入のみ。オンライン販売なし。</span>
+            <span data-lang="en">&dagger; On-site only. Not sold online.</span>
+            <span data-lang="it">&dagger; Solo in loco. Non vendiamo online.</span>
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="footer">&copy; KODATTORIA &nbsp;|&nbsp; <a href="https://www.instagram.com/koda.ttoria" target="_blank">Instagram</a></div>
+</div>
+
+<script src="lang.js"></script>
+</body>
+</html>

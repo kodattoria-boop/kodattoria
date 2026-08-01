@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KODATTORIA</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="lang-ja">
+
+<div id="lang-bar">
+  <button onclick="setLang('ja')" class="active" id="btn-ja">日本語</button>
+  <button onclick="setLang('en')" id="btn-en">English</button>
+  <button onclick="setLang('it')" id="btn-it">Italiano</button>
+</div>
+
+<div id="wrapper">
+  <table id="main-table">
+    <tbody>
+      <tr>
+        <!-- LEFT: PHOTO + NAV -->
+        <td id="left-cell">
+          <div id="photo-box">
+            <div style="width:200px;height:270px;background:#f0f0f0;border:1px solid #cccccc;display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:x-small;color:#aaaaaa;">
+                <span data-lang="ja">写真をここに配置</span>
+                <span data-lang="en">Photo here</span>
+                <span data-lang="it">Foto qui</span>
+              </span>
+            </div>
+          </div>
+          <ul id="site-nav">
+            <li class="active"><a href="index.html"><span data-lang="ja">トップ</span><span data-lang="en">Top</span><span data-lang="it">Top</span></a></li>
+            <li><a href="magazine.html"><span data-lang="ja">雑誌アーカイブ</span><span data-lang="en">Magazine</span><span data-lang="it">Rivista</span></a></li>
+            <li><a href="goods.html"><span data-lang="ja">グッズ</span><span data-lang="en">Goods</span><span data-lang="it">Merchandise</span></a></li>
+          </ul>
+        </td>
+
+        <!-- RIGHT: CONTENT -->
+        <td id="info-cell">
+          <div id="site-title">KODATTORIA</div>
+          <div id="site-tagline">
+            <span data-lang="ja">間借りイタリアン &amp; 雑誌 &amp; 別荘プロジェクト</span>
+            <span data-lang="en">Pop-up Italian &amp; Magazine &amp; Villa Project</span>
+            <span data-lang="it">Ristorante Itinerante &amp; Rivista &amp; Progetto Villa</span>
+          </div>
+
+          <!-- NEXT EVENT -->
+          <div class="section-title">
+            <span data-lang="ja">次回営業日</span>
+            <span data-lang="en">Next Event</span>
+            <span data-lang="it">Prossima Apertura</span>
+          </div>
+          <div class="next-event-box">
+            <div class="date">8.15 (Sat)</div>
+            <div class="vol">
+              <span data-lang="ja">KODATTORIA vol.9「感動した！プーリア」 発行日</span>
+              <span data-lang="en">KODATTORIA vol.9 &ldquo;Puglia, We Were Moved!&rdquo; &mdash; release day</span>
+              <span data-lang="it">Uscita di KODATTORIA vol.9 &ldquo;Puglia, ci ha emozionati!&rdquo;</span>
+            </div>
+          </div>
+
+          <!-- ABOUT -->
+          <div class="section-title">
+            <span data-lang="ja">KODATTORIAとは</span>
+            <span data-lang="en">About</span>
+            <span data-lang="it">Chi Siamo</span>
+          </div>
+          <p data-lang="ja" class="body-text">(コンセプト文 coming soon)</p>
+          <p data-lang="en" class="body-text">(Concept text coming soon)</p>
+          <p data-lang="it" class="body-text">(Testo del concept in arrivo)</p>
+
+          <!-- MEMBERS -->
+          <div class="section-title">
+            <span data-lang="ja">メンバー</span>
+            <span data-lang="en">Members</span>
+            <span data-lang="it">Il Team</span>
+          </div>
+          <ul class="member-list">
+            <li><span class="member-name">西川 匠</span> <span class="member-bio">— <span data-lang="ja">自己紹介準備中</span><span data-lang="en">Bio coming soon</span><span data-lang="it">Bio in arrivo</span></span></li>
+            <li><span class="member-name">冨井 治弥</span> <span class="member-bio">— <span data-lang="ja">自己紹介準備中</span><span data-lang="en">Bio coming soon</span><span data-lang="it">Bio in arrivo</span></span></li>
+            <li><span class="member-name">鈴木 秀太郎</span> <span class="member-bio">— <span data-lang="ja">自己紹介準備中</span><span data-lang="en">Bio coming soon</span><span data-lang="it">Bio in arrivo</span></span></li>
+            <li><span class="member-name">堀池 優太</span> <span class="member-bio">— <span data-lang="ja">自己紹介準備中</span><span data-lang="en">Bio coming soon</span><span data-lang="it">Bio in arrivo</span></span></li>
+            <li><span class="member-name">松枝 修太郎</span> <span class="member-bio">— <span data-lang="ja">自己紹介準備中</span><span data-lang="en">Bio coming soon</span><span data-lang="it">Bio in arrivo</span></span></li>
+            <li><span class="member-name">山田 泰啓</span> <span class="member-bio">— <span data-lang="ja">自己紹介準備中</span><span data-lang="en">Bio coming soon</span><span data-lang="it">Bio in arrivo</span></span></li>
+            <li><span class="member-name">子田 輝</span> <span class="member-bio">— <span data-lang="ja">自己紹介準備中</span><span data-lang="en">Bio coming soon</span><span data-lang="it">Bio in arrivo</span></span></li>
+          </ul>
+
+          <!-- INSTAGRAM -->
+          <div class="section-title">Instagram</div>
+          <div class="insta-box">
+            <img class="qr" src="koda.ttoria_qr.png" alt="Instagram QR @koda.ttoria">
+            <span class="insta-handle">@koda.ttoria</span><br>
+            <span style="font-size:x-small;">
+              <a href="https://www.instagram.com/koda.ttoria" target="_blank">instagram.com/koda.ttoria</a><br>
+              <span data-lang="ja">お問い合わせはDMまで</span>
+              <span data-lang="en">Enquiries via DM</span>
+              <span data-lang="it">Per info scrivici in DM</span>
+            </span>
+          </div>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="footer">&copy; KODATTORIA &nbsp;|&nbsp; <a href="https://www.instagram.com/koda.ttoria" target="_blank">Instagram</a></div>
+</div>
+
+<script src="lang.js"></script>
+<!-- Cloudflare Web Analytics -->
+<!-- <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script> -->
+</body>
+</html>
