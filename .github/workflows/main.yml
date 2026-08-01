@@ -34,5 +34,5 @@ jobs:
           git config user.email "actions@github.com"
           git add -A
           git diff --staged --quiet || git commit -m "auto: Notionからサイトを再生成 [$(date +'%Y-%m-%d')]"
-          git push
+          git pull --rebase origin main && git push
 # Cloudflare Pagesはmainブランチへのpushで自動デプロイされる
