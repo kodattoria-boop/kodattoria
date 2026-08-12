@@ -134,8 +134,15 @@ def parse_issue(page):
         d = datetime.fromisoformat(date_prop["start"])
         date_str = d.strftime("%Y.%m.%d")
 
-    # 表紙画像 URL
-    img_files = props.get("誠面画像（JPEG）", {}).get("files", [])
+    # 表紙画像 URL (表記揺れ・誤字対応)
+    img_files = []
+    possible_keys = ["表紙画像（JPEG）", "誠面画像（JPEG）", "表面画像（JPEG）", "表紙画像", "表紙", "画像"]
+    for key in possible_keys:
+        if key in props:
+            files_list = props[key].get("files", [])
+            if files_list:
+                img_files = files_list
+                break
     img_url = get_file_url(img_files)
 
     return {"vol": vol, "theme": theme, "date": date_str, "img_url": img_url}
