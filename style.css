@@ -141,6 +141,9 @@ a:hover { color: #cc0000; }
   font-size: small;
   color: #555555;
   display: none;
+  line-height: 1.6;
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 body.lang-ja .body-text[data-lang="ja"],
 body.lang-en .body-text[data-lang="en"],
@@ -172,12 +175,19 @@ body.lang-it .body-text[data-lang="it"] { display: block; }
   margin: 0 0 0 8px;
 }
 .member-list li {
-  padding: 3px 0;
+  padding: 6px 0;
   font-size: small;
   border-bottom: 1px dotted #dddddd;
+  line-height: 1.6;
 }
 .member-name { font-weight: bold; }
-.member-bio { color: #777777; font-size: x-small; }
+.member-bio {
+  color: #777777;
+  font-size: x-small;
+  line-height: 1.6;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
 
 /* MAGAZINE LIST */
 .mag-list {
