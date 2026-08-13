@@ -41,14 +41,12 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           
-          # 最新の状態にリセット
-          git fetch origin main
-          git reset --hard origin/main
-          
           git add -A
           
           # 変更がある場合のみコミット・プッシュを実行
           if ! git diff --staged --quiet; then
             git commit -m "auto: Notionからサイトを再生成 [$(date +'%Y-%m-%d')]"
             git push origin main
+          else
+            echo "No changes to commit"
           fi
