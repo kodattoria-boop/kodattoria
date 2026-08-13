@@ -71,7 +71,14 @@ a:hover { color: #cc0000; }
   padding-right: 24px;
 }
 #photo-box img {
-  width: 200px;
+  display: block;
+}
+
+/* 共通のサイト写真（home.jpg等）をレスポンシブにする */
+.site-photo {
+  max-width: 200px; /* デフォルトの表示上限（左カラム幅に合わせる） */
+  width: 100%;
+  height: auto;
   display: block;
   border: 1px solid #cccccc;
 }
