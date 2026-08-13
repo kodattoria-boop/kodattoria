@@ -220,7 +220,7 @@ def build_magazine_html(issues):
       </ul>
     </td>
     <td id="info-cell">
-      <div id="site-title">KODATTORIA</div>
+      <div id="site-title">KODATTORIAのホームページ</div>
       <div id="site-tagline">
         <span data-lang="ja">間借りイタリアン &amp; 雑誌 &amp; 別荘プロジェクト</span>
         <span data-lang="en">Pop-up Italian &amp; Magazine &amp; Villa Project</span>
