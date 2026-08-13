@@ -182,7 +182,7 @@ def render_mag_list(issues):
             <li>
               <div class="mag-cover-box">{cover_html}</div>
               <div class="mag-info">
-                <div><span class="vol-label">{vol}</span><strong>{theme}</strong></div>
+                <div><span class="vol-label">{vol}</span><br><strong>{theme}</strong></div>
                 <div style="color:#999;font-size:x-small;">{date}</div>
               </div>
             </li>""")
