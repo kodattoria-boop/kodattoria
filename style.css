@@ -9,6 +9,10 @@ body {
   padding: 0;
   position: relative;
 }
+
+/* Prevent horizontal overflow on small screens and make sizing predictable */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { max-width: 100%; overflow-x: hidden; }
 body::before {
   content: '';
   position: fixed;
@@ -340,4 +344,6 @@ body.lang-it p[data-lang="it"] { display: block; }
   }
   #photo-box > div { width: 100% !important; }
   #site-nav { margin-top: 8px; }
+  /* Ensure site-photo never forces horizontal overflow on small screens */
+  .site-photo { max-width: 100%; }
 }
