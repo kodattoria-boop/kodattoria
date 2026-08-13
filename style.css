@@ -116,7 +116,7 @@ a:hover { color: #cc0000; }
 
   /* 2. 画面幅に合わせて自動縮小（最小14px 〜 推奨3.5vw 〜 最大24px） */
   /* ※テキストの文字数に合わせて '3.5vw' の部分を微調整してください */
-  font-size: clamp(0.875rem, 3.5vw, 1.5rem);
+  font-size: clamp(0.875rem, 6.0vw, 1.5rem);
 
   font-weight: bold;
   letter-spacing: 0.08em;
