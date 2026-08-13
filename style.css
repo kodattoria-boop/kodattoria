@@ -235,10 +235,14 @@ body.lang-it .body-text[data-lang="it"] { display: block; }
   justify-content: center;
   gap: 4px;
 }
+.mag-info div {
+  display: block;
+}
 .vol-label {
   color: #999999;
   font-size: x-small;
-  margin-right: 4px;
+  display: block;
+  margin-bottom: 2px;
 }
 
 /* GOODS */
