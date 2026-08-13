@@ -240,7 +240,7 @@ def build_magazine_html(issues):
       <ul class="mag-list">{mag_list}
       </ul>
       <p class="purchase-note">
-        <span data-lang="ja">※ 購入は間借り喰業日の現地のみ。オンライン販売なし。</span>
+        <span data-lang="ja">※ 購入は間借り営業日の現地のみ。オンライン販売なし。</span>
         <span data-lang="en">&dagger; On-site only during pop-up events. Not sold online.</span>
         <span data-lang="it">&dagger; Disponibile solo durante gli eventi. Non vendiamo online.</span>
       </p>
