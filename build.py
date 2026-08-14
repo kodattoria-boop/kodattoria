@@ -211,7 +211,7 @@ def build_magazine_html(issues):
   <table id="main-table"><tbody><tr>
     <td id="left-cell">
       <div id="photo-box">
-        <img src="home.jpg" alt="KODATTORIAの写真">
+        <img class="site-photo" src="home.jpg" alt="KODATTORIAの写真">
       </div>
       <ul id="site-nav">
         <li><a href="index.html"><span data-lang="ja">トップ</span><span data-lang="en">Top</span><span data-lang="it">Top</span></a></li>
