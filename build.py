@@ -21,6 +21,7 @@ import requests
 from pathlib import Path
 from datetime import datetime
 from io import BytesIO
+import re
 
 try:
     from PIL import Image, ExifTags
@@ -76,6 +77,21 @@ def fetch_magazine_issues():
     return res.json().get("results", [])
 
 
+def fetch_production_issues():
+    """雑誌号管理DBから「制作中」の号を古い順（日付が近い順）に取得"""
+    url = f"https://api.notion.com/v1/databases/{NOTION_MAG_DB_ID}/query"
+    payload = {
+        "filter": {
+            "property": "ステータス",
+            "status": {"equals": "制作中"}
+        },
+        "sorts": [{"property": "発行予定日", "direction": "ascending"}]
+    }
+    res = requests.post(url, headers=HEADERS, json=payload)
+    res.raise_for_status()
+    return res.json().get("results", [])
+
+
 def get_file_url(file_prop):
     """ファイルプロパティからURLを取得"""
     files = file_prop or []
@@ -116,7 +132,15 @@ def download_and_optimize(url, out_path):
 
 
 def parse_issue(page):
-    """ページ情報を辞書に変換"""
+    """
+    ページ情報を辞書に変換する
+
+    Args:
+        page (dict): Notion API から取得したページオブジェクト
+
+    Returns:
+        dict: パースされた号情報（号、テーマ、英語テーマ、イタリア語テーマ、発行予定日、表紙URL等）
+    """
     props = page["properties"]
 
     # 号（title型）
@@ -145,7 +169,60 @@ def parse_issue(page):
                 break
     img_url = get_file_url(img_files)
 
-    return {"vol": vol, "theme": theme, "date": date_str, "img_url": img_url}
+    # 英語・イタリア語テーマの取得（プロパティが存在すれば取得、なければ空文字）
+    theme_en = ""
+    theme_it = ""
+
+    # 英語キー候補
+    for key in ["テーマ(en)", "テーマ_en", "テーマ en", "テーマ（en）", "テーマ(English)", "テーマ(english)", "Theme_en", "Theme en", "Theme (en)", "Theme", "Theme (English)"]:
+        if key in props:
+            parts = props[key].get("rich_text", [])
+            if parts:
+                theme_en = parts[0]["plain_text"]
+                break
+
+    # イタリア語キー候補
+    for key in ["テーマ(it)", "テーマ_it", "テーマ it", "テーマ（it）", "テーマ(Italian)", "テーマ(italian)", "Theme_it", "Theme it", "Theme (it)", "テーマ(伊)", "テーマ(伊語)"]:
+        if key in props:
+            parts = props[key].get("rich_text", [])
+            if parts:
+                theme_it = parts[0]["plain_text"]
+                break
+
+    return {
+        "vol": vol,
+        "theme": theme,
+        "theme_en": theme_en,
+        "theme_it": theme_it,
+        "date": date_str,
+        "img_url": img_url
+    }
+
+
+# OSのロケール設定に依存せず、常に英語表記の曜日を取得するためのマッピング
+WEEKDAYS_EN = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+
+def format_event_date(date_str):
+    """
+    Notionから取得した日付文字列を「M.DD (Day)」形式（例: 8.15 (Sat)）にフォーマットする。
+    OSのロケール設定に依存しないように曜日を取得する。
+
+    Args:
+        date_str (str): 「YYYY.MM.DD」形式の日付文字列
+
+    Returns:
+        str: フォーマットされた日付文字列
+    """
+    if not date_str:
+        return ""
+    try:
+        d = datetime.strptime(date_str, "%Y.%m.%d")
+        weekday = WEEKDAYS_EN[d.weekday()]
+        return f"{d.month}.{d.day:02d} ({weekday})"
+    except Exception as e:
+        print(f"  ⚠️ 日付フォーマットの変換に失敗しました ({date_str}): {e}")
+        return date_str
 
 
 def build_cover_images(issues):
@@ -251,6 +328,59 @@ def build_magazine_html(issues):
     print(f"  ✓ {out} 生成")
 
 
+def update_index_html(production_issues):
+    """
+    制作中の雑誌データから次回営業日情報を取得し、index.html の内容を更新する
+
+    Args:
+        production_issues (list): パース済みの「制作中」雑誌オブジェクトのリスト
+    """
+    index_file = OUT_DIR / "index.html"
+    if not index_file.exists():
+        print(f"  ⚠️ {index_file} が見つかりません。スキップします。")
+        return
+
+    if not production_issues:
+        print("  ⚠️ 制作中の雑誌（ステータス：制作中）が見つからないため、index.html の次回営業日は更新されません。")
+        return
+
+    # production_issues が Notion API からのページオブジェクト（未パース）で渡された場合はパースする
+    if production_issues and isinstance(production_issues[0], dict) and "properties" in production_issues[0]:
+        production_issues = [parse_issue(p) for p in production_issues]
+
+    # 最も日付が近い制作中の号を使用
+    next_issue = production_issues[0]
+    vol = next_issue["vol"]
+    theme_ja = next_issue["theme"]
+    # 英語とイタリア語は、Notionから取得できていればそれを使用し、なければ日本語をフォールバック
+    theme_en = next_issue.get("theme_en") or theme_ja
+    theme_it = next_issue.get("theme_it") or theme_ja
+
+    formatted_date = format_event_date(next_issue["date"])
+
+    # 挿入するHTMLを構築
+    next_event_html = f"""            <!-- NEXT_EVENT_START -->
+            <div class="date">{formatted_date}</div>
+            <div class="vol">
+              <span data-lang="ja">KODATTORIA {vol}「{theme_ja}」 発行日</span>
+              <span data-lang="en">KODATTORIA {vol} &ldquo;{theme_en}&rdquo; &mdash; release day</span>
+              <span data-lang="it">Uscita di KODATTORIA {vol} &ldquo;{theme_it}&rdquo;</span>
+            </div>
+            <!-- NEXT_EVENT_END -->"""
+
+    # index.htmlの読み込みと置換（正規表現でマーカー間を堅牢に置換）
+    content = index_file.read_text(encoding="utf-8")
+
+    pattern = re.compile(r"<!-- NEXT_EVENT_START -->.*?<!-- NEXT_EVENT_END -->", re.DOTALL)
+    if pattern.search(content):
+        # 既存ブロックを新しいHTMLで置換
+        new_content = pattern.sub(next_event_html, content, count=1)
+        index_file.write_text(new_content, encoding="utf-8")
+        print(f"  ✓ {index_file} の次回営業日を更新しました: {vol} ({formatted_date})")
+    else:
+        print(f"  ⚠️ {index_file} 内に '<!-- NEXT_EVENT_START -->' または '<!-- NEXT_EVENT_END -->' が見つかりません。")
+
+
 def main():
     check_env()
     print("=" * 50)
@@ -258,18 +388,26 @@ def main():
     print(f"  実行時刻: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 50)
 
-    print("\n[1/3] Notion DB から雑誌データを取得中...")
+    print("\n[1/4] Notion DB から発行済みの雑誌データを取得中...")
     pages = fetch_magazine_issues()
     issues = [parse_issue(p) for p in pages]
     print(f"  ✓ {len(issues)}冊の発行済アーカイブを取得")
     for iss in issues:
         print(f"     {iss['vol']} 「{iss['theme']}」 {iss['date']}")
 
-    print("\n[2/3] 表紙画像をダウンロード・最適化中...")
+    print("\n[2/4] Notion DB から制作中の雑誌データを取得中...")
+    prod_pages = fetch_production_issues()
+    prod_issues = [parse_issue(p) for p in prod_pages]
+    print(f"  ✓ {len(prod_issues)}冊の制作中の雑誌を取得")
+    for iss in prod_issues:
+        print(f"     {iss['vol']} 「{iss['theme']}」 {iss['date']}")
+
+    print("\n[3/4] 表紙画像をダウンロード・最適化中...")
     build_cover_images(issues)
 
-    print("\n[3/3] HTMLを生成中...")
+    print("\n[4/4] HTMLを生成・更新中...")
     build_magazine_html(issues)
+    update_index_html(prod_issues)
 
     print("\n" + "=" * 50)
     print("✅ ビルド完了！")
