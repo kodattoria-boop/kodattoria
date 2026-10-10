@@ -45,7 +45,7 @@ jobs:
 
           # 変更がある場合のみコミット・プッシュを実行
           if ! git diff --staged --quiet; then
-            git commit -m "chore: update generated HTML and images from Notion [skip ci]"
+            git commit -m "chore: update generated HTML and images from Notion"
             git pull --rebase origin main
             git push origin main
           else
