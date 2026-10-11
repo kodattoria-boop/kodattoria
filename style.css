@@ -264,20 +264,14 @@ body.lang-it .body-text[data-lang="it"] { display: block; }
   margin: 4px 0 4px 8px;
   vertical-align: top;
   text-align: center;
-  width: 120px;
+  width: 260px;
 }
 .goods-photo {
-  width: 100px;
-  height: 100px;
-  background: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: x-small;
-  color: #aaaaaa;
-  margin: 0 auto 6px;
+  width: 100%;
+  margin: 0 auto 8px;
 }
-.goods-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.goods-photo img { width: 100%; height: auto; object-fit: contain; display: block; }
+.goods-photo-detail { margin-top: 10px; }
 .goods-name { font-weight: bold; font-size: small; }
 .goods-price { color: #cc0000; font-size: x-small; margin-top: 2px; }
 
